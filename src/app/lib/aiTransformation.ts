@@ -3,7 +3,8 @@ import { vectorStore } from "./vectorStore";
 export async function ingestFileText(docs: any) {
   if (!docs) return { error: "Missing text content" };
 
-  const res = await vectorStore.addDocuments(docs);
+  const store = await vectorStore;
+  const res = await store.addDocuments(docs);
 
   if (!res || !Array.isArray(res)) {
     return { error: "Failed to save embedding" };
@@ -17,7 +18,8 @@ export async function queryDocumentEmbedding(query: string, noteId: string) {
     return { error: "Query is required" };
   }
 
-  const results = await vectorStore.similaritySearch(query, 2, { noteId });
+  const store = await vectorStore;
+  const results = await store.similaritySearch(query, 2, { noteId });
 
   if (!results || !Array.isArray(results)) {
     return { error: "Failed to retrieve response" };

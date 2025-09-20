@@ -1,4 +1,5 @@
 import { queryDocumentEmbedding } from "@/app/lib/aiTransformation";
+import { dbConnect } from "@/app/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -19,6 +20,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    await dbConnect();
     const ingestedEmbedding = await queryDocumentEmbedding(query, noteId);
 
     let answers = "";

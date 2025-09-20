@@ -26,7 +26,7 @@ export const GET = async (req: NextRequest) => {
       query = { ...query, title: { $regex: title, $options: "i" } };
     }
 
-    // await dbConnect();
+    await dbConnect();
     const notes = await Note.find({ clerkUserId: clerkId, ...query }).select(
       "title type updatedAt createdAt"
     );

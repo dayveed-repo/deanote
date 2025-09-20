@@ -1,6 +1,7 @@
 import { deleteNote } from "@/app/lib/noteServices";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
+import { dbConnect } from "@/app/lib/db";
 
 export async function DELETE(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
@@ -20,7 +21,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // await dbConnect();
+    await dbConnect();
     const note = await deleteNote(id);
 
     if (note.success) {

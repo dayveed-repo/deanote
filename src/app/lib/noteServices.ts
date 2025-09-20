@@ -11,6 +11,7 @@ import {
 import { extractTextWithPuppeteer } from "./linkService";
 import fs from "fs";
 import Note from "../models/Note";
+import { dbConnect } from "./db";
 
 export const processNoteLink = async (link: string, title: string) => {
   try {
@@ -118,6 +119,8 @@ export const deleteNote = async (noteId: string) => {
     if (!noteId) {
       return { error: "Note Id is missing" };
     }
+
+    await dbConnect();
 
     const note = await Note.findById(noteId);
 

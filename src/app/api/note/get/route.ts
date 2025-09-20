@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
 
     // deleteAllEmbeddings();
 
-    // await dbConnect();
+    await dbConnect();
     const note = await Note.findById(id).populate("user", "name email");
 
     if (!note || !note._id) {

@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // await dbConnect();
+    await dbConnect();
 
     const { userId } = await auth();
 

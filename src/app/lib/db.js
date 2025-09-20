@@ -17,13 +17,12 @@ if (!cached) {
 export async function dbConnect() {
   if (cached.conn) return cached.conn;
 
-  try {
-    cached.conn = await mongoose.connect(MONGODB_URI, {
-      bufferCommands: false,
-    });
-    return cached.conn;
-  } catch (error) {
-    console.error("MongoDB connection error:", error);
-    throw error;
+  if (!cached.promise) {
+    cached.promise = mongoose
+      .connect(MONGODB_URI, { bufferCommands: false })
+      .then((mongoose) => mongoose);
   }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
